@@ -1,0 +1,440 @@
+/* Progress circle animation */
+@keyframes progressFill {
+    from { transform: rotate(-90deg); }
+    to { transform: rotate(calc(-90deg + (360deg * var(--progress)))); }
+}
+
+.progress-circle {
+    --progress: 0;
+    width: 120px;
+    height: 120px;
+    position: relative;
+}
+
+.progress-circle svg {
+    width: 120px;
+    height: 120px;
+    transform: rotate(-90deg);
+}
+
+.progress-circle circle {
+    fill: none;
+    stroke-width: 10;
+    stroke-linecap: round;
+}
+
+.progress-circle .bg {
+    stroke: #e0e0e0;
+}
+
+.progress-circle .progress {
+    stroke: #4CAF50;
+    stroke-dasharray: 314;
+    stroke-dashoffset: calc(314 - (314 * var(--progress) / 100));
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-circle .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* Celebration animation */
+@keyframes celebrate {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.celebrate {
+    animation: celebrate 0.5s ease;
+}
+
+/* Task completion animation */
+.planner-task.completed {
+    animation: taskComplete 0.3s ease;
+}
+
+@keyframes taskComplete {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* premium-starter-plus-optimized.css - SIMPAN DI public/css/ */
+:root {
+    /* Warna utama */
+    --primary: #9C27B0;
+    --primary-light: #BA68C8;
+    --primary-dark: #7B1FA2;
+    --secondary: #673AB7;
+    --accent: #00BCD4;
+    --success: #4CAF50;
+    --warning: #FF9800;
+    --danger: #F44336;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #9C27B0 0%, #673AB7 100%);
+    --gradient-accent: linear-gradient(135deg, #00BCD4 0%, #0097A7 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(156, 39, 176, 0.1);
+    --shadow-md: 0 4px 20px rgba(156, 39, 176, 0.15);
+    --shadow-lg: 0 8px 30px rgba(156, 39, 176, 0.2);
+
+    /* Border radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+}
+
+/* ========== RESET & BASE ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f8f9fa 0%, #f3e5f5 100%);
+    min-height: 100vh;
+    color: #333;
+    overflow-x: hidden;
+}
+
+/* ========== NAVBAR ========== */
+.navbar-premium-plus {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-md);
+    border-bottom: 3px solid var(--primary);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem 0;
+}
+
+.premium-plus-badge {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar-plus {
+    background: white;
+    min-height: calc(100vh - 73px);
+    box-shadow: 5px 0 15px rgba(0,0,0,0.05);
+    border-right: 1px solid rgba(156, 39, 176, 0.1);
+    padding: 20px 0;
+}
+
+.sidebar-item-plus {
+    padding: 12px 20px;
+    margin: 5px 15px;
+    border-radius: 10px;
+    color: #666;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-item-plus:hover,
+.sidebar-item-plus.active {
+    background: rgba(156, 39, 176, 0.05);
+    color: var(--primary);
+    border-left-color: var(--primary);
+    transform: translateX(5px);
+}
+
+/* ========== CARDS ========== */
+.card-premium-plus {
+    background: white;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    border: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+    overflow: hidden;
+    position: relative;
+}
+
+.card-premium-plus::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--gradient-primary);
+}
+
+.card-premium-plus:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.card-header-premium-plus {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 20px;
+    border: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* ========== BUTTONS ========== */
+.btn-premium-plus {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-premium-plus:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: white;
+}
+
+.btn-ai {
+    background: var(--gradient-accent);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+/* ========== DAILY MENU CARD ========== */
+.daily-menu-card-plus {
+    background: linear-gradient(135deg, #fff, #faf5ff);
+    border-radius: var(--radius-xl);
+    padding: 25px;
+    border: 2px solid var(--primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-icon-plus {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.3rem;
+}
+
+/* ========== RECIPE CARDS ========== */
+.recipe-card-premium-plus {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s;
+    border: 1px solid rgba(156, 39, 176, 0.1);
+}
+
+.recipe-card-premium-plus:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+}
+
+/* ========== DAILY PLANNER ========== */
+.planner-task-plus {
+    background: white;
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 15px;
+    border-left: 5px solid var(--accent);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s;
+}
+
+.planner-task-plus:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-md);
+}
+
+.planner-task-plus.completed {
+    opacity: 0.7;
+    background: rgba(76, 175, 80, 0.05);
+}
+
+/* ========== AI CHAT ========== */
+.ai-chat-container {
+    background: white;
+    border-radius: var(--radius-xl);
+    border: 2px solid var(--accent);
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.ai-chat-header {
+    background: var(--gradient-accent);
+    color: white;
+    padding: 15px;
+    font-weight: 600;
+}
+
+/* ========== STATS CARDS ========== */
+.stats-card-premium-plus {
+    text-align: center;
+    padding: 25px 20px;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s;
+}
+
+.stats-card-premium-plus:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ========== MODALS ========== */
+.recipe-modal-premium .modal-content {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 2px solid var(--primary);
+}
+
+.recipe-modal-premium .modal-header {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 25px;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1200px) {
+    .sidebar-plus {
+        min-width: 250px;
+    }
+}
+
+@media (max-width: 992px) {
+    .sidebar-plus {
+        position: fixed;
+        left: -100%;
+        top: 73px;
+        width: 280px;
+        height: calc(100vh - 73px);
+        z-index: 999;
+        transition: left 0.3s;
+    }
+
+    .sidebar-plus.show {
+        left: 0;
+    }
+
+    .card-premium-plus:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-premium-plus .d-none.d-md-block {
+        display: none !important;
+    }
+
+    .daily-menu-card-plus {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-premium-plus,
+    .btn-ai {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .card-header-premium-plus {
+        padding: 15px;
+        font-size: 1rem;
+    }
+}
+
+/* ========== UTILITY CLASSES ========== */
+.text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hover-lift {
+    transition: transform 0.3s;
+}
+
+.hover-lift:hover {
+    transform: translateY(-3px);
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+/* ========== CUSTOM SCROLLBAR ========== */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(156, 39, 176, 0.1);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    border-radius: 10px;
+}
