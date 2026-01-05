@@ -2,17 +2,15 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REPO = 'tata197'
-        IMAGE_NAME = 'eatjoy-tubes'
+        DOCKER_REPO        = 'tata197'
+        IMAGE_NAME         = 'eatjoy-tubes'
         DOCKER_CREDENTIALS = 'dockerhub-credentials'
-        REGISTRY = 'docker.io'
+        REGISTRY           = 'docker.io'
     }
 
     stages {
         stage('Checkout Repository') {
-            steps {
-                checkout scm
-            }
+            steps { checkout scm }
         }
 
         stage('Build Docker Image') {
@@ -20,7 +18,6 @@ pipeline {
                 bat """
                 @echo off
                 docker build --pull ^
-                  -t %DOCKER_REPO%/%IMAGE_NAME%:%BUILD_NUMBER% ^
                   -t %DOCKER_REPO%/%IMAGE_NAME%:latest .
                 """
             }
@@ -36,7 +33,6 @@ pipeline {
                     bat """
                     @echo off
                     echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin %REGISTRY%
-                    docker push %DOCKER_REPO%/%IMAGE_NAME%:%BUILD_NUMBER%
                     docker push %DOCKER_REPO%/%IMAGE_NAME%:latest
                     docker logout %REGISTRY%
                     """
@@ -47,26 +43,19 @@ pipeline {
         stage('Pipeline Summary') {
             steps {
                 echo """
-                =====================================
-                CI/CD EATJOY-TUBES SELESAI
-                Image:
-                - ${DOCKER_REPO}/${IMAGE_NAME}:${BUILD_NUMBER}
-                - ${DOCKER_REPO}/${IMAGE_NAME}:latest
-                =====================================
-                """
+=====================================
+CI/CD EATJOY-TUBES SELESAI
+Docker Image:
+- ${DOCKER_REPO}/${IMAGE_NAME}:latest
+=====================================
+"""
             }
         }
     }
 
     post {
-        success {
-            echo '✅ Pipeline berhasil dijalankan'
-        }
-        failure {
-            echo '❌ Pipeline gagal, cek log Jenkins'
-        }
-        always {
-            cleanWs()
-        }
+        success { echo '✅ Pipeline berhasil dijalankan' }
+        failure { echo '❌ Pipeline gagal, cek log Jenkins' }
+        always  { cleanWs() }
     }
 }
