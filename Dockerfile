@@ -44,7 +44,7 @@ COPY . .
 RUN composer install \
     --no-interaction \
     --no-dev \
-    --optimize-autoloader
+    --optimize-autoloader \
     --no-scripts
 
 RUN rm -f bootstrap/cache/*.php || true
