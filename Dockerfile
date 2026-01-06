@@ -43,7 +43,7 @@ COPY . .
 # Install dependency Laravel
 RUN composer install \
     --no-interaction \
-    --no-dev \
+    --prefer-dist \
     --optimize-autoloader \
     --no-scripts \
  && composer dump-autoload -o \
