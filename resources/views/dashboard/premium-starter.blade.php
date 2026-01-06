@@ -630,15 +630,15 @@
                                                     <i class="bi bi-clock"></i> <span id="dailyMenuTimeStarter">{{ $dailyMenu['time'] ?? '20 menit' }}</span>
                                                 </p>
                                                 <button class="btn-premium btn-sm w-100 refresh-menu-starter"
-                                                        data-refresh-left="{{ $refreshLeft ?? 3 }}"
-                                                        data-user-id="{{ $user->id }}"
-                                                        data-plan="starter">
-                                                    <i class="bi bi-arrow-clockwise"></i>
-                                                    @if(($refreshLeft ?? 3) > 0)
-                                                        Refresh Menu ({{ $refreshLeft ?? 3 }}x tersisa)
-                                                    @else
-                                                        Refresh Habis - Coba Besok
-                                                    @endif
+                                                    data-refresh-left="{{ $refreshLeft ?? 5 }}"
+                                                    data-user-id="{{ $user->id }}"
+                                                    data-plan="starter">
+                                                <i class="bi bi-arrow-clockwise"></i>
+                                                @if(($refreshLeft ?? 5) > 0)
+                                                    Refresh Menu ({{ $refreshLeft ?? 5 }}x tersisa)
+                                                @else
+                                                    Refresh Habis - Coba Besok
+                                                @endif
                                                 </button>
                                             </div>
                                         </div>
@@ -936,7 +936,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Anda akan menggunakan 1 dari <span id="remainingRefreshStarter">3</span> kesempatan refresh hari ini.</p>
+                    <p>Anda akan menggunakan 1 dari <span id="remainingRefreshStarter">5</span> kesempatan refresh hari ini.</p>
                     <p class="text-muted small">Refresh akan direset setiap hari pukul 00:00.</p>
                 </div>
                 <div class="modal-footer">
@@ -1371,12 +1371,28 @@
 
         // Daily Menu templates untuk refresh (STARTER)
         const dailyMenusStarter = [
-            { name: "Oatmeal Buah Beri", calories: 280, time: "10 menit" },
-            { name: "Ayam Bakar Lemon", calories: 320, time: "18 menit" },
-            { name: "Salad Sayur Segar", calories: 250, time: "15 menit" },
-            { name: "Smoothie Pisang", calories: 220, time: "5 menit" },
-            { name: "Tumis Tahu Brokoli", calories: 280, time: "15 menit" },
-            { name: "Sup Ayam Jamur", calories: 300, time: "25 menit" }
+            { name: "Salmon panggang dengan salad sayur", calories: 420, time: "25 menit" },
+            { name: "Ayam panggang dengan quinoa dan sayur", calories: 450, time: "30 menit" },
+            { name: "Buddha bowl sayur dengan protein", calories: 430, time: "20 menit" },
+            { name: "Tom yum rendah kalori dengan udang", calories: 380, time: "25 menit" },
+            { name: "Nasi shirataki dengan beef teriyaki", calories: 410, time: "25 menit" },
+            { name: "Sushi bowl dengan salmon dan sayur", calories: 440, time: "20 menit" },
+            { name: "Poke bowl dengan ikan dan sayuran segar", calories: 430, time: "20 menit" },
+            { name: "Roti gandum dengan alpukat dan telur", calories: 390, time: "15 menit" },
+            { name: "Chicken caesar salad versi ringan", calories: 370, time: "15 menit" },
+            { name: "Wrap kalkun dengan sayuran", calories: 380, time: "15 menit" },
+            { name: "Tumis udang dengan brokoli", calories: 360, time: "20 menit" },
+            { name: "Ikan dori panggang dengan kentang dan salad", calories: 420, time: "30 menit" },
+            { name: "Sup iga kuah bening dengan sayur", calories: 450, time: "35 menit" },
+            { name: "Ayam panggang madu dengan salad", calories: 410, time: "25 menit" },
+            { name: "Protein bowl berisi telur, ayam, dan sayur", calories: 430, time: "20 menit" },
+            { name: "Paket keto berisi daging, alpukat, dan sayur", calories: 440, time: "20 menit" },
+            { name: "Bento rendah karbohidrat", calories: 400, time: "20 menit" },
+            { name: "Salad tuna dengan telur rebus", calories: 390, time: "15 menit" },
+            { name: "Tempe steak dengan salad sayur", calories: 380, time: "20 menit" },
+            { name: "Oatmeal protein dengan buah beri", calories: 360, time: "10 menit" },
+            { name: "Smoothie tinggi protein", calories: 320, time: "8 menit" },
+            { name: "Kotak camilan sehat", calories: 300, time: "5 menit" }
         ];
 
         // ==================== DOCUMENT READY ====================

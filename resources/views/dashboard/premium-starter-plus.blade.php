@@ -1364,15 +1364,11 @@
                                                 </p>
                                                 <div class="d-flex gap-3">
                                                     <button class="btn-premium-plus btn-sm w-50 refresh-button-plus"
-                                                            id="refreshMenuBtn"
-                                                            data-refresh-left="{{ $refreshLeft ?? 5 }}"
-                                                            data-user-id="{{ $user->id }}"
-                                                            data-plan="starter_plus">
-                                                        <i class="bi bi-arrow-clockwise me-1"></i>
-                                                        Refresh Menu
-                                                    </button>
-                                                    <button class="btn-ai btn-sm w-50" onclick="askAIAboutMenu()">
-                                                        <i class="bi bi-robot me-1"></i> Tanya AI
+                                                        id="refreshMenuBtn"
+                                                        data-refresh-left="unlimited"
+                                                        data-user-id="{{ $user->id }}"
+                                                        data-plan="starter_plus">
+                                                    <i class="bi bi-arrow-clockwise"></i> Refresh Menu (Unlimited)
                                                     </button>
                                                 </div>
                                             </div>
@@ -2005,12 +2001,28 @@
 
         // Daily Menu templates
         const dailyMenus = [
-            { name: "Salmon Panggang Premium dengan Asparagus", calories: 450, time: "30 menit" },
-            { name: "Quinoa Bowl Superfood Premium", calories: 380, time: "25 menit" },
-            { name: "Smoothie Hijau Detox Premium", calories: 280, time: "8 menit" },
-            { name: "Dada Ayam Bakar Lemon Herbs Premium", calories: 350, time: "22 menit" },
-            { name: "Oatmeal Premium dengan Berries & Almond", calories: 320, time: "12 menit" },
-            { name: "Tumis Tahu Brokoli Premium", calories: 300, time: "18 menit" }
+            { name: "Oatmeal pisang dengan madu", calories: 320, time: "10 menit" },
+            { name: "Nasi merah, ayam panggang, dan lalapan", calories: 420, time: "25 menit" },
+            { name: "Sup sayur bening dengan tempe", calories: 350, time: "20 menit" },
+            { name: "Smoothie bowl pisang dengan chia seed", calories: 310, time: "10 menit" },
+            { name: "Tumis kangkung dengan tahu", calories: 330, time: "15 menit" },
+            { name: "Salad sayur dengan telur rebus", calories: 300, time: "12 menit" },
+            { name: "Soto ayam kuah bening", calories: 380, time: "25 menit" },
+            { name: "Pepes ikan dengan urap sayur", calories: 410, time: "30 menit" },
+            { name: "Capcay kuah dengan ayam suwir", calories: 360, time: "20 menit" },
+            { name: "Pecel sayur dengan saus kacang ringan", calories: 390, time: "20 menit" },
+            { name: "Nasi jagung dengan ikan bakar dan lalapan", calories: 430, time: "30 menit" },
+            { name: "Sayur asem dengan tempe bacem", calories: 400, time: "25 menit" },
+            { name: "Bubur kacang hijau rendah gula", calories: 320, time: "20 menit" },
+            { name: "Gado-gado dengan saus kacang ringan", calories: 410, time: "20 menit" },
+            { name: "Nasi merah dengan orak-arik telur dan sayur", calories: 390, time: "15 menit" },
+            { name: "Wrap sayur dengan ayam panggang", calories: 370, time: "15 menit" },
+            { name: "Yogurt dengan granola dan buah segar", calories: 300, time: "5 menit" },
+            { name: "Tumis tahu dengan brokoli", calories: 280, time: "15 menit" },
+            { name: "Nasi shirataki dengan ayam teriyaki", calories: 360, time: "20 menit" },
+            { name: "Kentang panggang dengan salad sayur", calories: 340, time: "25 menit" },
+            { name: "Sup krim jamur rendah lemak", calories: 330, time: "20 menit" },
+            { name: "Chia pudding dengan susu almond", calories: 260, time: "5 menit" }
         ];
 
         // AI Chat Messages
@@ -2091,60 +2103,47 @@
 
         // ==================== REFRESH BUTTON IMPROVEMENT ====================
         function setupRefreshButton() {
-            const refreshBtn = document.getElementById('refreshMenuBtn');
-            let refreshCount = 5;
-            let canRefresh = true;
+    const refreshBtn = document.getElementById('refreshMenuBtn');
+    const refreshLeftAttr = refreshBtn.getAttribute('data-refresh-left');
+    let refreshCount = (refreshLeftAttr === 'unlimited') ? Infinity : parseInt(refreshLeftAttr || '0', 10);
+    let canRefresh = true;
 
-            refreshBtn.addEventListener('click', function() {
-                if (!canRefresh) {
-                    showToast('⏰ Silakan tunggu 10 detik sebelum refresh berikutnya', 'warning');
-                    return;
-                }
+    refreshBtn.addEventListener('click', function() {
+        if (!canRefresh) return;
 
-                if (refreshCount <= 0) {
-                    showToast('⏰ Batas refresh harian telah habis! Coba lagi besok.', 'warning');
-                    refreshBtn.disabled = true;
-                    refreshBtn.classList.add('disabled');
-                    return;
-                }
-
-                // Show loading
-                const originalText = refreshBtn.innerHTML;
-                refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Memuat...';
-                refreshBtn.classList.add('loading');
-                refreshBtn.disabled = true;
-
-                // Update menu harian
-                const randomMenu = dailyMenus[Math.floor(Math.random() * dailyMenus.length)];
-                document.getElementById('dailyMenuName').textContent = randomMenu.name;
-                document.getElementById('dailyMenuCalories').textContent = randomMenu.calories;
-                document.getElementById('dailyMenuTime').textContent = randomMenu.time;
-
-                // Update refresh count
-                refreshCount--;
-
-                // Disable refresh for 10 seconds
-                canRefresh = false;
-                setTimeout(() => {
-                    canRefresh = true;
-                }, 10000);
-
-                // Show success message
-                setTimeout(() => {
-                    refreshBtn.innerHTML = originalText;
-                    refreshBtn.classList.remove('loading');
-                    refreshBtn.disabled = false;
-
-                    if (refreshCount > 0) {
-                        showToast('✨ Menu berhasil di-refresh! ' + refreshCount + ' refresh tersisa', 'success');
-                    } else {
-                        showToast('🎉 Menu berhasil di-refresh! Refresh habis untuk hari ini', 'info');
-                        refreshBtn.disabled = true;
-                        refreshBtn.classList.add('disabled');
-                    }
-                }, 1500);
-            });
+        // Kalau bukan unlimited, cek limit
+        if (refreshCount !== Infinity && refreshCount <= 0) {
+            refreshBtn.disabled = true;
+            showToast('Refresh menu habis. Coba lagi besok ya!', 'warning');
+            return;
         }
+
+        canRefresh = false;
+        refreshBtn.disabled = true;
+
+        // Request ke backend (kalau kamu pakai ajax fetch di sini, biarkan tetap seperti file kamu)
+        // Setelah sukses: update tampilan menu + update refreshCount
+
+        // Contoh update count (penting):
+        if (refreshCount !== Infinity) {
+            refreshCount -= 1;
+            refreshBtn.setAttribute('data-refresh-left', String(refreshCount));
+            refreshBtn.innerHTML = `<i class="bi bi-arrow-clockwise"></i> Refresh Menu (${refreshCount}x tersisa)`;
+            if (refreshCount <= 0) {
+                refreshBtn.disabled = true;
+            } else {
+                refreshBtn.disabled = false;
+            }
+        } else {
+            // Unlimited: tidak berkurang & tidak disable
+            refreshBtn.innerHTML = `<i class="bi bi-arrow-clockwise"></i> Refresh Menu (Unlimited)`;
+            refreshBtn.disabled = false;
+        }
+
+        canRefresh = true;
+    });
+}
+
 
         // ==================== WEIGHT CHART FUNCTIONS ====================
         function initWeightChartPlus() {
