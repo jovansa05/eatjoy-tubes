@@ -3,14 +3,18 @@ set -e
 
 cd /var/www/html
 
-# Bersihkan cache Laravel agar provider lama tidak nyangkut
-php artisan config:clear || true
-php artisan cache:clear || true
-php artisan route:clear || true
-php artisan view:clear || true
+echo "=== ENTRYPOINT: clearing laravel caches (no artisan) ==="
+
+# HAPUS cache config/provider yang bisa bikin Collision 'nyangkut'
+rm -f bootstrap/cache/*.php || true
+
+# Hapus cache view & cache aplikasi (aman)
+rm -rf storage/framework/views/* || true
+rm -rf storage/framework/cache/* || true
 
 # Permission (aman walau gagal)
 chown -R www-data:www-data storage bootstrap/cache || true
 chmod -R 775 storage bootstrap/cache || true
 
+echo "=== ENTRYPOINT: starting apache ==="
 exec apache2-foreground
