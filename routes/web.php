@@ -111,6 +111,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/subscription/plans', [SubscriptionController::class, 'plans'])->name('subscription.plans');
     Route::get('/subscription/checkout/{plan}', [SubscriptionController::class, 'checkout'])->name('subscription.checkout');
     Route::post('/subscription/free', [SubscriptionController::class, 'subscribeFree'])->name('subscription.free');
+    Route::post('/subscription/demo-activate', [SubscriptionController::class, 'demoActivate'])
+    ->name('subscription.demo.activate')
+    ->middleware('auth');
 
     // Recipes (User)
     Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create');
